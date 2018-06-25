@@ -8,8 +8,17 @@
 - It can take photo continuously as video streaming.
 
 ## Hardware connection
+####          Arducam Mini Camera         ---------      stm32    
+####                SCL                
+####                SDA
+####                VCC
+####                GND
+####                SCK
+####                MISO
+####                MOSI
+####                CS
 
- 
+
 ## Mainly tasks
 - Set the camera to JPEG output mode.
 - Read data from Serial port and deal with it
