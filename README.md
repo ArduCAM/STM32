@@ -35,17 +35,6 @@
              
              CS        ->        PB1
  ![Alt text](https://github.com/UCTRONICS/pic/blob/master/stm32/hardware2.jpg)
-   
-
-## Mainly tasks
-- Set the camera to JPEG output mode.
-- Read data from Serial port and deal with it
-- If receive 0x00-0x08,the resolution will be changed.
-- If receive 0x10,camera will capture a JPEG photo and buffer the image to FIFO.Then write datas to Serial port.
-- If receive 0x20,camera will capture JPEG photo and write datas continuously.Stop when receive 0x21.
-- If receive 0x30,camera will capture a BMP  photo and buffer the image to FIFO.Then write datas to Serial port.
-- If receive 0x11 ,set camera to JPEG output mode.
-- If receive 0x31 ,set camera to BMP  output mode.
 
 ## Operation Demo
 ### Part1: Download the Project from https://github.com/ArduCAM/STM32.git
