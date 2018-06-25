@@ -1,6 +1,4 @@
 # STM32
-## ArduCAM_STM32_V0.1 (C)2018 Arducam 
-## Web: http://www.ArduCAM.com
 
 ## Brief Introduction
 - This program is a demo of how to use ArduCAM Mini camera on STM32 f103C8T6/ f103zet6 .etc platform.
@@ -8,15 +6,15 @@
 - It can take photo continuously as video streaming.
 
 ## Hardware connection
-###          Arducam Mini Camera ----------- stm32    
-#####                SCL                      PB10               
-#####                SDA                      PB11
-#####                VCC                      5V
-#####                GND                      GND
-#####                SCK                      PB13                      
-#####                MISO                     PB14
-#####                MOSI                     PB15
-#####                CS                       PB1
+-          Arducam Mini Camera   ->       STM32    
+-              SCL               ->        PB10               
+-              SDA                      PB11
+-              VCC                      5V
+-              GND                      GND
+-              SCK                      PB13                      
+-              MISO                     PB14
+-              MOSI                     PB15
+-              CS                       PB1
 
 
 ## Mainly tasks
