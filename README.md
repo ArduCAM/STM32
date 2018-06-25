@@ -6,7 +6,7 @@
 - It can take photo continuously as video streaming.
 
 ## Hardware connection
- Arducam Mini Camera   ->        STM32 
+             Arducam   ->        STM32 
  
              SCL       ->        PB10
              
