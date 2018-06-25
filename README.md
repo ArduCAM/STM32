@@ -23,7 +23,8 @@
              MOSI      ->        PB15
              
              CS        ->        PB1
-
+ ![Alt text](https://github.com/UCTRONICS/pic/blob/master/stm32/hardware2.jpg)
+   
 
 ## Mainly tasks
 - Set the camera to JPEG output mode.
@@ -36,3 +37,5 @@
 - If receive 0x31 ,set camera to BMP  output mode.
 
 ## Operation Demo
+### Part1: Download the Project from https://github.com/ArduCAM/STM32.git
+
