@@ -38,4 +38,16 @@
 
 ## Operation Demo
 ### Part1: Download the Project from https://github.com/ArduCAM/STM32.git
+![EasyBehavior](https://github.com/UCTRONICS/pic/blob/master/stm32/stm32_lib_download.gif)
+### Part2: Upload the firmware to the STM32 platform
+![EasyBehavior](https://github.com/UCTRONICS/pic/blob/master/stm32/stm32_firmware.gif)
+### Part3: Signal capture demo:
+![EasyBehavior](https://github.com/UCTRONICS/pic/blob/master/stm32/stm32_signal_capture.gif)
+### Part4: Video streaming demo:
+![EasyBehavior](https://github.com/UCTRONICS/pic/blob/master/stm32/stm32_videoStreaming.gif)
+
+
+
+
+
 
