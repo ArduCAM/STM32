@@ -31,7 +31,6 @@ void ArduCAM_Init(byte model)
 		{		
 		  wrSensorReg8_8(0xff, 0x01);
       wrSensorReg8_8(0x12, 0x80);
-			delay_ms(100);
       if(m_fmt == JPEG)
       {
 				wrSensorRegs8_8(OV2640_JPEG_INIT);
@@ -44,7 +43,6 @@ void ArduCAM_Init(byte model)
       else
       {
         wrSensorRegs8_8(OV2640_QVGA);
-				delay_ms(100);
       }
       break;
 		}
@@ -83,8 +81,6 @@ void ArduCAM_Init(byte model)
           wrSensorReg16_8(0x3621, 0x10);
           wrSensorReg16_8(0x3801, 0xb0);
           wrSensorReg16_8(0x4407, 0x04);
-
-				
         }
         else
         {
@@ -99,15 +95,20 @@ void ArduCAM_Init(byte model)
           rdSensorReg16_8(0x3621, &reg_val);
           wrSensorReg16_8(0x3621, reg_val & 0xdf);
         }
-	      write_reg(ARDUCHIP_TIM, VSYNC_LEVEL_MASK);   //VSYNC is active HIGH
+				write_reg(ARDUCHIP_TIM, VSYNC_LEVEL_MASK);   //VSYNC is active HIGH					
+				//ÊÖ¶¯ÉèÖÃÆØ¹â
+				uint8_t _x3503;
+				wrSensorReg16_8(0x5001,_x3503|0x01);				
+				wrSensorReg16_8(0x3500,0x00);
+				wrSensorReg16_8(0x3501,0x79);
+				wrSensorReg16_8(0x3502,0xe0);		
 			  break;
       }
      default:
      break;
   }
 }
-
-//CS多신놓迦뺏
+//CSÒý½Å³õÊ¼»¯
 void ArduCAM_CS_init(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
@@ -119,7 +120,7 @@ void ArduCAM_CS_init(void)
 	CS_HIGH();	
 }
 
-//寧刻됐놓迦뺏
+//Ö¸Ê¾µÆ³õÊ¼»¯
 void ArduCAM_LED_init(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
@@ -380,20 +381,20 @@ void OV5642_set_JPEG_size(uint8_t size)
 
 byte wrSensorReg8_8(int regID, int regDat)
 {
-	delay_us(10);
+	delay_us(5);
 	sccb_bus_start();                          
 	if(sccb_bus_write_byte(sensor_addr) == 0)         
 	{
 		sccb_bus_stop();                        
 		return 1;
 	}
-	delay_us(10);
+	delay_us(5);
 	if(sccb_bus_write_byte(regID) == 0)
 	{
 		sccb_bus_stop();                              
 		return 2;                                       
 	}
-	delay_us(10);
+	delay_us(5);
 	if(sccb_bus_write_byte(regDat)==0)                    
 	{
 		sccb_bus_stop();                                 
@@ -447,10 +448,10 @@ int wrSensorRegs8_8(const struct sensor_reg reglist[])
   const struct sensor_reg *next = reglist;
   while ((reg_addr != 0xff) | (reg_val != 0xff))
   {
-    reg_addr =next->reg;
+    reg_addr = next->reg;
     reg_val = next->val;
     err = wrSensorReg8_8(reg_addr, reg_val);
-    delay_ms(10);
+ //   delay_us(400);
     next++;
   }
 
@@ -465,19 +466,19 @@ byte wrSensorReg16_8(int regID, int regDat)
 		sccb_bus_stop();
 		return(0);
 	}
-	delay_us(20);
+	delay_us(5);
   if(0==sccb_bus_write_byte(regID>>8))
 	{
 		sccb_bus_stop();
 		return(0);
 	}
-	delay_us(20);
+	delay_us(5);
   if(0==sccb_bus_write_byte(regID))
 	{
 		sccb_bus_stop();
 		return(0);
 	}
-	delay_us(20);
+	delay_us(5);
   if(0==sccb_bus_write_byte(regDat))
 	{
 		sccb_bus_stop();
@@ -501,7 +502,7 @@ int wrSensorRegs16_8(const struct sensor_reg reglist[])
     reg_addr =next->reg;
     reg_val = next->val;
     err = wrSensorReg16_8(reg_addr, reg_val);
-  // delay_ms(100);
+    delay_us(600);
     next++;
   }
   return err;
