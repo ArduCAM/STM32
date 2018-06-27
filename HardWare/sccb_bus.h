@@ -6,7 +6,7 @@
 #include "stm32f10x.h"
 #include "sys.h"
 
-#define I2C_TIM 10
+#define I2C_TIM 1
 
 #define SCCB_SIC_H()      PBout(10) =1	 	//SCL H
 #define SCCB_SIC_L()      PBout(10) = 0	 	//SCL H
