@@ -23,7 +23,7 @@ int main(void)
 	ArduCAM_CS_init();
 	sccb_bus_init();
 	SPI2_Init();
-
+	
 	while(1)
 	{
 		write_reg(ARDUCHIP_TEST1, 0x55);
@@ -81,7 +81,6 @@ int main(void)
 		 break;		 
 		}
 	}  
-	
 //Support OV2640/OV5640/OV5642 Init
   ArduCAM_Init(sensor_model);
 
@@ -282,10 +281,10 @@ int main(void)
 				start_shoot = 0;
 				SingleCapTransfer();
 			}
-			if(receive_OK)  //一次DMA传输结束
+			if(receive_OK) 
 			{
 				receive_OK= 0;
-				SendbyUSART1();   //USART1传输
+				SendbyUSART1(); 
 			}
 		}	
 		else if(Camera_WorkMode == 2)
@@ -304,10 +303,10 @@ int main(void)
 					send_OK=false;    
 					SingleCapTransfer();		
 				}	
-				if(receive_OK)  //一次DMA传输结束
+				if(receive_OK) 
 				{
 					receive_OK= 0;
-					SendbyUSART1();   //USART1传输
+					SendbyUSART1();   
 				}
 			}
 		}
