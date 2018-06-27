@@ -96,9 +96,10 @@ void ArduCAM_Init(byte model)
           wrSensorReg16_8(0x3621, reg_val & 0xdf);
         }
 				write_reg(ARDUCHIP_TIM, VSYNC_LEVEL_MASK);   //VSYNC is active HIGH					
-				//ÊÖ¶¯ÉèÖÃÆØ¹â
+				
 				uint8_t _x3503;
-				wrSensorReg16_8(0x5001,_x3503|0x01);				
+				wrSensorReg16_8(0x5001,_x3503|0x01);	 // Close auto exposure mode
+	      			//Manually set the exposure value 
 				wrSensorReg16_8(0x3500,0x00);
 				wrSensorReg16_8(0x3501,0x79);
 				wrSensorReg16_8(0x3502,0xe0);		
@@ -108,7 +109,7 @@ void ArduCAM_Init(byte model)
      break;
   }
 }
-//CSÒý½Å³õÊ¼»¯
+//CS init
 void ArduCAM_CS_init(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
