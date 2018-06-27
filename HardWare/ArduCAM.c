@@ -67,6 +67,7 @@ void ArduCAM_Init(byte model)
 				wrSensorRegs16_8(OV5640YUV_Sensor_Dvp_Init);
 				wrSensorRegs16_8(OV5640_RGB_QVGA);
 			} 
+			write_reg(ARDUCHIP_TIM, VSYNC_LEVEL_MASK);   //VSYNC is active HIGH
 			 break;
 		}
 		case OV5642:
@@ -98,6 +99,7 @@ void ArduCAM_Init(byte model)
           rdSensorReg16_8(0x3621, &reg_val);
           wrSensorReg16_8(0x3621, reg_val & 0xdf);
         }
+	      write_reg(ARDUCHIP_TIM, VSYNC_LEVEL_MASK);   //VSYNC is active HIGH
 			  break;
       }
      default:
@@ -105,7 +107,7 @@ void ArduCAM_Init(byte model)
   }
 }
 
-//CS“˝Ω≈≥ı ºªØ
+//CSÂ§öÏã†ÎÜìËø¶Î∫è
 void ArduCAM_CS_init(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
@@ -117,7 +119,7 @@ void ArduCAM_CS_init(void)
 	CS_HIGH();	
 }
 
-//÷∏ æµ∆≥ı ºªØ
+//Ô•üÂàªÎêêÎÜìËø¶Î∫è
 void ArduCAM_LED_init(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
