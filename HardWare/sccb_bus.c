@@ -10,7 +10,7 @@
  uint32_t ntime;
 
 /**
-  * @brief  初始化总线
+  * @brief  init i2c bus
   * @param  None
   * @retval None
   */
@@ -18,18 +18,18 @@ void sccb_bus_init(void)
 {
 	GPIO_InitTypeDef  GPIO_InitStructure;
  	
- 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);	 //使能PB端口时钟
+ 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);	 
 	
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;				 // 端口配置
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		 //输入
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;				 
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		 
  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
  	GPIO_Init(GPIOB, &GPIO_InitStructure);
- 	GPIO_SetBits(GPIOB,GPIO_Pin_11);						 // 输出高
+ 	GPIO_SetBits(GPIOB,GPIO_Pin_11);						 
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;				 // 端口配置
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //输输出
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;			
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 	
  	GPIO_Init(GPIOB, &GPIO_InitStructure);
- 	GPIO_SetBits(GPIOB,GPIO_Pin_10);						 // 输出高
+ 	GPIO_SetBits(GPIOB,GPIO_Pin_10);						
 	SCCB_DATA_OUT;
 
 }
@@ -39,13 +39,13 @@ void sccb_bus_init(void)
 
 void sccb_bus_start(void)
 {
-    SCCB_SID_H();             //数据线高电平
+    SCCB_SID_H();             
     delay_us(I2C_TIM);
-    SCCB_SIC_H();	           //在时钟线高的时候数据线由高至低
+    SCCB_SIC_H();	           
     delay_us(I2C_TIM);
     SCCB_SID_L();
     delay_us(I2C_TIM);
-    SCCB_SIC_L();	           //数据线恢复低电平，单操作函数必要
+    SCCB_SIC_L();	           
     delay_us(I2C_TIM);
 }
 
@@ -92,7 +92,7 @@ uint8_t sccb_bus_write_byte(uint8_t data)
 	uint32_t i;
 	uint8_t tem;
 
-	for(i = 0; i < 8; i++) //循环8次发送数据
+	for(i = 0; i < 8; i++) 
 	{
 		if((data<<i) & 0x80)
 		{
@@ -106,20 +106,19 @@ uint8_t sccb_bus_write_byte(uint8_t data)
 		SCCB_SIC_H();	
 		delay_us(I2C_TIM);
 		SCCB_SIC_L();	
-		//delay_us(I2C_TIM);
+
 	}
-	//delay_us(10);
 	SCCB_DATA_IN;
 	delay_us(I2C_TIM);
 	SCCB_SIC_H();	
 	delay_us(I2C_TIM);
 	if(SCCB_SID_STATE)
 	{
-		tem = 0;                //SDA=1发送失败
+		tem = 0;               
 	}
 	else 
 	{
-		tem = 1;                //SDA=0发送成功，返回1
+		tem = 1;                
 	}
 
 	SCCB_SIC_L();	
@@ -135,7 +134,7 @@ uint8_t sccb_bus_read_byte(void)
 	
 	SCCB_DATA_IN;
 	delay_us(I2C_TIM);
-	for(i = 8; i > 0; i--) //循环8次接收数据
+	for(i = 8; i > 0; i--) 
 	{		     
 		delay_us(I2C_TIM);
 		SCCB_SIC_H();
