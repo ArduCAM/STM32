@@ -47,7 +47,7 @@ int main(void)
 		sensor_addr = 0x78;
 		rdSensorReg16_8(OV5640_CHIPID_HIGH, &vid);
 		rdSensorReg16_8(OV5640_CHIPID_LOW, &pid);
-		if ((vid == 0x56) || (pid == 0x40))
+		if ((vid == 0x56) && (pid == 0x40))
 		{
 			sensor_model =  OV5640 ;
 			printf("ACK CMD OV5640 detected.\r\n");
@@ -61,7 +61,7 @@ int main(void)
 		sensor_addr = 0x78;
 		rdSensorReg16_8(OV5642_CHIPID_HIGH, &vid);
 		rdSensorReg16_8(OV5642_CHIPID_LOW, &pid);
-		if ((vid == 0x56) || (pid == 0x42))
+		if ((vid == 0x56) && (pid == 0x42))
 		{
 			sensor_model =  OV5642 ;
 			printf("ACK CMD OV5642 detected.\r\n"); 
