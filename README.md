@@ -1,7 +1,7 @@
 # STM32
 
 ## Brief Introduction
-- This program is a demo of how to use ArduCAM Mini camera on STM32 f103C8T6/ f103ZET6 .etc platform.
+- This program is a demo of how to use ArduCAM Mini camera on STM32 f103C8T6/ f103ZET6 / L152RBT6.etc platform.
 - This demo was made for ArduCAM_Mini_2MP. ArduCAM_Mini_5MP_Plus. It needs to be used in combination with PC software.
 - It support signal capture 
 - It can take photo continuously as video streaming.
@@ -16,7 +16,7 @@
 - If receive 0x11 ,set camera to JPEG output mode.
 - If receive 0x31 ,set camera to BMP  output mode.
 
-## Hardware connection
+## Hardware connection (STM32 f103C8T6/ f103ZET6)
              Arducam   ->        STM32 
  
              SCL       ->        PB10
@@ -34,6 +34,25 @@
              MOSI      ->        PB15
              
              CS        ->        PB1
+			 
+## Hardware connection (STM32L152RBT6)
+             Arducam   ->        STM32 
+ 
+             SCL       ->        PB10
+             
+             SDA       ->        PB11
+             
+             VCC       ->        5V
+             
+             GND       ->        GND
+             
+             SCK       ->        PB13 
+             
+             MISO      ->        PB14
+             
+             MOSI      ->        PB15
+             
+             CS        ->        PB12
  ![Alt text](https://github.com/UCTRONICS/pic/blob/master/stm32/hardware2.jpg)
 
 ## Operation Demo
