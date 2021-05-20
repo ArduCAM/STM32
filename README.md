@@ -2,7 +2,7 @@
 
 ## Brief Introduction
 - This program is a demo of how to use ArduCAM Mini camera on STM32 f103C8T6/ f103ZET6 / L152RBT6.etc platform.
-- This demo was made for ArduCAM_Mini_2MP. ArduCAM_Mini_5MP_Plus. It needs to be used in combination with PC software.
+- This demo was made for ArduCAM_Mini_2MP. It needs to be used in combination with PC software.
 - It support signal capture 
 - It can take photo continuously as video streaming.
 
@@ -57,9 +57,9 @@
 
 ## Operation Demo
 ### Part1: Download the Project from https://github.com/ArduCAM/STM32.git
-![EasyBehavior](https://github.com/UCTRONICS/pic/blob/master/stm32/stm32_lib_download.gif)
+![EasyBehavior](https://github.com/UCTRONICS/pic/blob/master/stm32/Downloaddriver.gif)
 ### Part2: Upload the firmware to the STM32 platform
-![EasyBehavior](https://github.com/UCTRONICS/pic/blob/master/stm32/stm32_firmware.gif)
+![EasyBehavior](https://github.com/UCTRONICS/pic/blob/master/stm32/Compiledriver.gif)
 ### Part3: Signal capture demo:
 ![EasyBehavior](https://github.com/UCTRONICS/pic/blob/master/stm32/stm32_signal_capture.gif)
 ### Part4: Video streaming demo:
