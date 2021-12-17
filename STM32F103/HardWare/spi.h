@@ -13,17 +13,16 @@ extern uint8_t	Buf2[BUFFER_MAX_SIZE];
 extern uint8_t  EP2_SendFinish;
 
 		
- #define 	PB_SPI_RX_DMA_Channel    DMA1_Channel4
- #define  PB_SPI_DMA_IRQ			  	 DMA1_Channel4_IRQn
- #define  PB_SPI_DMA_IRQHandler		 DMA1_Channel4_IRQHandler
+ #define  PB_SPI_RX_DMA_Channel    DMA1_Channel2
+ #define  PB_SPI_DMA_IRQ		   DMA1_Channel2_IRQn
+ #define  PB_SPI_DMA_IRQHandler	   DMA1_Channel2_IRQHandler
 
 u8 DMA1_Init(void);
-void SPI2_Init(void);			 
-void SPI2_SetSpeed(u8 SpeedSet);   
-u8 SPI2_ReadWriteByte(u8 TxData);
-void	DMA1_RX(uint8_t *p , uint32_t len);
-void	DMA1_SendtoUsart(uint8_t *p , uint32_t len);
-void	SendbyUSART1( void);
+void SPI1_Init(void);			 
+u8 SPI1_ReadWriteByte(u8 TxData);
+void DMA1_RX(uint8_t *p , uint32_t len);
+void DMA1_SendtoUsart(uint8_t *p , uint32_t len);
+void SendbyUSART1( void);
 void SingleCapTransfer(void);
 void StartBMPcapture(void);
 #endif

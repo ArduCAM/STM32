@@ -112,13 +112,13 @@ void ArduCAM_Init(byte model)
 //CS init
 void ArduCAM_CS_init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStructure;
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_InitStructure.GPIO_Pin =  CS_PIN;		
-	GPIO_Init(CS_PORT, &GPIO_InitStructure);
-	CS_HIGH();	
+GPIO_InitTypeDef GPIO_InitStructure;
+RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+GPIO_InitStructure.GPIO_Pin =  CS_PIN;		
+GPIO_Init(CS_PORT, &GPIO_InitStructure);
+CS_HIGH();	
 }
 
 //Ö¸Ê¾µÆ³õÊ¼»¯
@@ -161,8 +161,8 @@ uint8_t bus_read(int address)
 {
 	uint8_t value;
    CS_LOW();
-	 SPI2_ReadWriteByte(address);
-	 value = SPI2_ReadWriteByte(0x00);
+	 SPI1_ReadWriteByte(address);
+	 value = SPI1_ReadWriteByte(0x00);
 	 CS_HIGH();
 	 return value;
 }
@@ -170,8 +170,8 @@ uint8_t bus_read(int address)
 uint8_t bus_write(int address,int value)
 {	
 	CS_LOW();delay_us(10);
-	SPI2_ReadWriteByte(address);
-	SPI2_ReadWriteByte(value);
+	SPI1_ReadWriteByte(address);
+	SPI1_ReadWriteByte(value);
 	delay_us(10);
 	CS_HIGH();
 	return 1;
@@ -196,7 +196,7 @@ uint8_t read_fifo(void)
 }
 void set_fifo_burst()
 {
-	SPI2_ReadWriteByte(BURST_FIFO_READ);
+	SPI1_ReadWriteByte(BURST_FIFO_READ);
 }
 
 
@@ -219,9 +219,9 @@ uint32_t read_fifo_length(void)
 {
 	uint32_t len1,len2,len3,len=0;
 	len1 = read_reg(FIFO_SIZE1);
-  len2 = read_reg(FIFO_SIZE2);
-  len3 = read_reg(FIFO_SIZE3) & 0x7f;
-  len = ((len3 << 16) | (len2 << 8) | len1) & 0x07fffff;
+	len2 = read_reg(FIFO_SIZE2);
+	len3 = read_reg(FIFO_SIZE3) & 0x7f;
+	len = ((len3 << 16) | (len2 << 8) | len1) & 0x07fffff;
 	return len;	
 }
 

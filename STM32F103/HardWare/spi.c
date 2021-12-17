@@ -22,21 +22,20 @@ uint8_t  EP2_SendFinish = 1;
 uint8_t	Buf1[BUFFER_MAX_SIZE]={0}, Buf2[BUFFER_MAX_SIZE]={0};
 extern uint16_t NumPackage;
 
-void SPI2_Init(void)
+void SPI1_Init(void)
 {
- 	GPIO_InitTypeDef GPIO_InitStructure;
-  SPI_InitTypeDef  SPI_InitStructure;
-  DMA_InitTypeDef DMA_InitStructure;
-  NVIC_InitTypeDef   NVIC_InitStructure;
-	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_GPIOB, ENABLE );
-	RCC_APB1PeriphClockCmd(	RCC_APB1Periph_SPI2,  ENABLE );
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1,ENABLE);
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+	GPIO_InitTypeDef GPIO_InitStructure;
+	SPI_InitTypeDef  SPI_InitStructure;
+	DMA_InitTypeDef DMA_InitStructure;
+	NVIC_InitTypeDef   NVIC_InitStructure;
+	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_GPIOA | RCC_APB2Periph_SPI1, ENABLE );
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1,ENABLE);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
- 	GPIO_SetBits(GPIOB,GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15);
+	GPIO_SetBits(GPIOA,GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7);
 
 	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
 	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
@@ -44,103 +43,95 @@ void SPI2_Init(void)
 	SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
 	SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
 	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
-	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
+	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;
 	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
 	SPI_InitStructure.SPI_CRCPolynomial = 7;
-	SPI_Init(SPI2, &SPI_InitStructure);
- 
-	SPI_Cmd(SPI2, ENABLE);
-	SPI2_ReadWriteByte(0xff);
+	SPI_Init(SPI1, &SPI_InitStructure);
 
-  DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)&SPI2->DR;
-  DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-  DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-  DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-  DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-  DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
-  DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
-  DMA_InitStructure.DMA_Priority = DMA_Priority_High;
-  DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-  DMA_Init(PB_SPI_RX_DMA_Channel, &DMA_InitStructure);
+	SPI_Cmd(SPI1, ENABLE);
+	SPI1_ReadWriteByte(0xff);
 
-  NVIC_InitStructure.NVIC_IRQChannel = PB_SPI_DMA_IRQ;
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-  NVIC_Init(&NVIC_InitStructure);
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)&SPI1->DR;
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
+	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+	DMA_Init(PB_SPI_RX_DMA_Channel, &DMA_InitStructure);
 
-  NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel7_IRQn;
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-  NVIC_Init(&NVIC_InitStructure);
+	NVIC_InitStructure.NVIC_IRQChannel = PB_SPI_DMA_IRQ;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+
+	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel7_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
 
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
-  DMA_InitStructure.DMA_Priority = DMA_Priority_High;
-  DMA_Init(DMA1_Channel5, &DMA_InitStructure);
+	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+	DMA_Init(DMA1_Channel3, &DMA_InitStructure);
 
-  DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)&USART2->DR;
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)&USART2->DR;
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
-  DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh;
-  DMA_Init(DMA1_Channel7, &DMA_InitStructure);
+	DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh;
+	DMA_Init(DMA1_Channel7, &DMA_InitStructure);
 
-  DMA_ITConfig(PB_SPI_RX_DMA_Channel, DMA_IT_TC, ENABLE);
-  DMA_ITConfig(DMA1_Channel7, DMA_IT_TC, ENABLE);
+	DMA_ITConfig(PB_SPI_RX_DMA_Channel, DMA_IT_TC, ENABLE);
+	DMA_ITConfig(DMA1_Channel7, DMA_IT_TC, ENABLE);
 }   
  
-void SPI2_SetSpeed(u8 SPI_BaudRatePrescaler)
-{
-  assert_param(IS_SPI_BAUDRATE_PRESCALER(SPI_BaudRatePrescaler));
-	SPI2->CR1&=0XFFC7;
-	SPI2->CR1|=SPI_BaudRatePrescaler;
-	SPI_Cmd(SPI2,ENABLE); 
-} 
-
-u8 SPI2_ReadWriteByte(u8 TxData)
+u8 SPI1_ReadWriteByte(u8 TxData)
 {		
 	u8 retry=0;				 	
-	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET)
+	while(SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET)
 	{
 		retry++;
 		if(retry>200)return 0;
 	}			  
-	SPI_I2S_SendData(SPI2, TxData);
+	SPI_I2S_SendData(SPI1, TxData);
 	retry=0;
 
-	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET)
+	while(SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET)
 	{
 		retry++;
 		if(retry>200)return 0;
 	}	  						    
-	return SPI_I2S_ReceiveData(SPI2);				    
+	return SPI_I2S_ReceiveData(SPI1);				    
 }
 
-void	DMA1_RX(uint8_t *p , uint32_t len)
+void DMA1_RX(uint8_t *p , uint32_t len)
 {		
-  CS_LOW();
+	CS_LOW();
 	set_fifo_burst();
 	PB_SPI_RX_DMA_Channel->CMAR = (u32)p;
 	PB_SPI_RX_DMA_Channel->CNDTR = len;
-	DMA1_Channel5->CMAR = (u32)p;
-	DMA1_Channel5->CNDTR = len;
-	SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx | SPI_I2S_DMAReq_Tx, ENABLE);		
-  DMA_Cmd(PB_SPI_RX_DMA_Channel, ENABLE);
-  DMA_Cmd(DMA1_Channel5, ENABLE);	
+	DMA1_Channel3->CMAR = (u32)p;
+	DMA1_Channel3->CNDTR = len;
+	SPI_I2S_DMACmd(SPI1, SPI_I2S_DMAReq_Rx | SPI_I2S_DMAReq_Tx, ENABLE);		
+	DMA_Cmd(PB_SPI_RX_DMA_Channel, ENABLE);
+	DMA_Cmd(DMA1_Channel3, ENABLE);	
 }
 
-void	DMA1_SendtoUsart(uint8_t *p , uint32_t len)
+void DMA1_SendtoUsart(uint8_t *p , uint32_t len)
 {		
 	DMA1_Channel7->CMAR = (u32)p;
 	DMA1_Channel7->CNDTR = len;
 	USART_DMACmd(USART2, USART_DMAReq_Tx, ENABLE);		
-  DMA_Cmd(DMA1_Channel7, ENABLE);
+	DMA_Cmd(DMA1_Channel7, ENABLE);
 }
 
-void	SendbyUSART1(void)
+void SendbyUSART1(void)
 {	
-  uint8_t	*sdbuf;
+	uint8_t	*sdbuf;
 	haveRev += sendlen;
-  if(haveRev < length)
+    if(haveRev < length)
 	{	
 		if(picbuf == Buf1)
 		{		
@@ -150,8 +141,8 @@ void	SendbyUSART1(void)
 		{
 			sdbuf = Buf2;	  picbuf = Buf1;
 		}
-	  UART1_BulkOut(sendlen,sdbuf);
-    noRev	= length - haveRev;		
+		UART1_BulkOut(sendlen,sdbuf);
+		noRev	= length - haveRev;		
 		sendlen	= (noRev>=BUFFER_MAX_SIZE) ? BUFFER_MAX_SIZE : noRev;	
 		DMA1_RX(picbuf, sendlen);	
 	}
@@ -203,8 +194,8 @@ void StartBMPcapture(void)
 	{
 		for (j = 0; j < 320; j++)
 		{
-			VH = SPI2_ReadWriteByte(0x00);			
-			VL = SPI2_ReadWriteByte(0x00);		
+			VH = SPI1_ReadWriteByte(0x00);			
+			VL = SPI1_ReadWriteByte(0x00);		
 			while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
 			USART_SendData(USART1, VL);
 			delay_us(15);
@@ -223,24 +214,24 @@ void StartBMPcapture(void)
 
 void PB_SPI_DMA_IRQHandler(void)
 { 	
- if(DMA_GetITStatus(DMA1_IT_TC4))
-  {
-    DMA_ClearITPendingBit(DMA1_IT_GL4 | DMA1_IT_TC4 | DMA1_IT_GL5 | DMA1_IT_TC5);
+	if(DMA_GetITStatus(DMA1_IT_TC2))
+	{
+		DMA_ClearITPendingBit(DMA1_IT_GL4 | DMA1_IT_TC2 | DMA1_IT_GL5 | DMA1_IT_TC5);
 		DMA_Cmd(PB_SPI_RX_DMA_Channel, DISABLE);
-		DMA_Cmd(DMA1_Channel5, DISABLE);
-	  SPI_I2S_DMACmd(SPI2, SPI_I2S_DMAReq_Rx | SPI_I2S_DMAReq_Tx, DISABLE);
-    CS_HIGH();
+		DMA_Cmd(DMA1_Channel3, DISABLE);
+		SPI_I2S_DMACmd(SPI1, SPI_I2S_DMAReq_Rx | SPI_I2S_DMAReq_Tx, DISABLE);
+		CS_HIGH();
 		receive_OK =1;
-  }
+	}
 }
 
 void DMA1_Channel7_IRQHandler(void)
 { 	
 	if(DMA_GetITStatus(DMA1_IT_TC7))
-  {
-    DMA_ClearITPendingBit(DMA1_IT_GL7 | DMA1_IT_TC7);
+	{
+		DMA_ClearITPendingBit(DMA1_IT_GL7 | DMA1_IT_TC7);
 		DMA_Cmd(DMA1_Channel7, DISABLE);
-	  USART_DMACmd(USART2, USART_DMAReq_Tx , DISABLE);
-  }
+		USART_DMACmd(USART2, USART_DMAReq_Tx , DISABLE);
+	}
 }
 
