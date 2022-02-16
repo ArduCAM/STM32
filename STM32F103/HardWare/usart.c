@@ -69,9 +69,9 @@ void UART1_BulkOut(uint32_t len, uint8_t *p)
 	
 	for(cnt=0;cnt!=len;cnt++)
 	{	    
-  	while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+		while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
 		USART_SendData(USART1, *p);
-    p++;    
+		p++;    
 	}
 }
 

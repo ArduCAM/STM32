@@ -23,17 +23,17 @@
              
              SDA       ->        PB11
              
-             VCC       ->        5V
+             VCC       ->        3.3V
              
              GND       ->        GND
              
-             SCK       ->        PB13 
+             SCK       ->        PA5 
              
-             MISO      ->        PB14
+             MISO      ->        PA6
              
-             MOSI      ->        PB15
+             MOSI      ->        PA7
              
-             CS        ->        PB1
+             CS        ->        PA4
 			 
 ## Hardware connection (STM32L152RBT6)
              Arducam   ->        STM32 
@@ -42,7 +42,7 @@
              
              SDA       ->        PB11
              
-             VCC       ->        5V
+             VCC       ->        3.3V
              
              GND       ->        GND
              

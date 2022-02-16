@@ -18,11 +18,10 @@ int main(void)
 	SystemInit();
 	delay_init();
 	USART1_UART_Init(921600);
-
-  ArduCAM_LED_init();
+	ArduCAM_LED_init();
 	ArduCAM_CS_init();
 	sccb_bus_init();
-	SPI2_Init();
+	SPI1_Init();
 	
 	while(1)
 	{
