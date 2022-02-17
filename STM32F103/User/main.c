@@ -262,9 +262,10 @@ int main(void)
 				case 0x31:
 					set_format(BMP);
 					ArduCAM_Init(sensor_model);
-					#if !defined(OV2640)
-						clear_bit(ARDUCHIP_TIM,VSYNC_MASK);
-					#endif
+					if(sensor_model != OV2640)
+					{
+						clear_bit(ARDUCHIP_TIM, VSYNC_LEVEL_MASK);
+					}
 					wrSensorReg16_8(0x3818,0x81);
 					wrSensorReg16_8(0x3621,0xa7);		
 					printf("ACK CMD SetToBMP \r\n");	
